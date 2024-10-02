@@ -3,7 +3,7 @@ import { BigInt, BigDecimal, Address } from '@graphprotocol/graph-ts'
 import { TokenConverter as TokenConverterContract } from '../types/AutoListingsRegistry/TokenConverter'
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
-export const TOKEN_CONVERTER_ADDRESS = '0xdd90b13bcb92950ca9b6b3e0407d439533ea0df2'
+export const TOKEN_CONVERTER_ADDRESS = '0x18eedef5d3d21c2828ca8557bef7210bfa481bc2'
 
 export let ZERO_BI = BigInt.fromI32(0)
 export let ONE_BI = BigInt.fromI32(1)

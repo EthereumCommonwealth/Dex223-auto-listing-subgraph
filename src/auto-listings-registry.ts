@@ -105,7 +105,7 @@ export function handleListingContractUpdated(event: ListingContractUpdatedEvent)
     owner.equals(autoListingAddress) ||
     autoListingAddress.equals(Address.fromString(ADDRESS_ZERO)) 
   ) {
-    log.error('Owner address is invalid {}', [owner.toHexString()])
+    log.debug('Owner address is invalid {}', [owner.toHexString()])
     return
   }
   log.debug('AutoListing address {} and owner address {}', [autoListingAddress.toHexString(), owner.toHexString()])
@@ -131,13 +131,13 @@ export function handleListingPrice(event: ListingPriceEvent): void {
 
   let autoListing = AutoListing.load(event.params._autolisting.toHexString())
   if (autoListing === null) {
-    log.error('AutoListing not found for address {}', [event.params._autolisting.toHexString()])
+    log.debug('AutoListing not found for address {}', [event.params._autolisting.toHexString()])
     return
   }
 
   let feeToken = getFeeToekn(feeTokenAddress)
   if (feeToken === null) {
-    log.error('Token not found for address {} == ', [feeTokenAddress.toHexString()])
+    log.debug('Token not found for address {} == ', [feeTokenAddress.toHexString()])
     return
   }
   let priceDetail = PriceDetail.load(priceDetailId)

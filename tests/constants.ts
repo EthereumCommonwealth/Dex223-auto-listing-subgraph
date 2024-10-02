@@ -119,24 +119,22 @@ export const createAddToken = (token: TokenFixture): void => {
     createMockedFunction(
       Address.fromString(TOKEN_CONVERTER_ADDRESS),
       'getERC223WrapperFor',
-      'getERC223WrapperFor(address):(address,string)'
+      'getERC223WrapperFor(address):(address)'
     )
       .withArgs([ethereum.Value.fromAddress(Address.fromString(token.addressERC20))])
       .returns([
         ethereum.Value.fromAddress(Address.fromString(token.inConverter ? token.addressERC223 : ADDRESS_ZERO)),
-        ethereum.Value.fromString(token.inConverter ? 'ERC-223' : 'Error')
       ])
 
     // Mocking token converter contract for ERC20
     createMockedFunction(
       Address.fromString(TOKEN_CONVERTER_ADDRESS),
       'getERC20WrapperFor',
-      'getERC20WrapperFor(address):(address,string)'
+      'getERC20WrapperFor(address):(address)'
     )
       .withArgs([ethereum.Value.fromAddress(Address.fromString(token.addressERC20))])
       .returns([
         ethereum.Value.fromAddress(Address.fromString(token.inConverter ? token.addressERC223 : ADDRESS_ZERO)),
-        ethereum.Value.fromString(token.inConverter ? 'ERC-20' : 'Error')
       ])
   }
 }

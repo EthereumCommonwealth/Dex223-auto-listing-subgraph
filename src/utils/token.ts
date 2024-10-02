@@ -146,13 +146,13 @@ export function fetchTokenInConverter(address: Address): boolean {
   // Try getting ERC223 wrapper
   let resultERC223 = tokenConverterContract.try_getERC223WrapperFor(address)
   if (!resultERC223.reverted) {
-    return resultERC223.value.getValue0().toHexString() != ADDRESS_ZERO
+    return resultERC223.value.toHexString() != ADDRESS_ZERO
   }
 
   // Try getting ERC20 wrapper
   let resultERC20 = tokenConverterContract.try_getERC20WrapperFor(address)
   if (!resultERC20.reverted) {
-    return resultERC20.value.getValue0().toHexString() != ADDRESS_ZERO
+    return resultERC20.value.toHexString() != ADDRESS_ZERO
   }
 
   return false
