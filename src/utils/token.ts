@@ -104,18 +104,39 @@ export function fetchTokenDecimalsSlim(
   return null
 }
 
+// Converter wrappers carry a suffixed symbol (DDEGEN2 becomes DDEGEN220), so read the origin first.
+function isERC20Wrapper(tokenAddressERC20: Address, tokenAddressERC223: Address): boolean {
+  if (tokenAddressERC223.toHexString() == ADDRESS_ZERO) {
+    return false
+  }
+  let result = tokenConverterContract.try_isWrapper(tokenAddressERC20)
+  return !result.reverted && result.value
+}
+
 export function fetchTokenSymbol(tokenAddressERC20: Address, tokenAddressERC223: Address): string {
-  let value = fetchTokenSymbolSlim(tokenAddressERC20)
+  let first = tokenAddressERC20
+  let second = tokenAddressERC223
+  if (isERC20Wrapper(tokenAddressERC20, tokenAddressERC223)) {
+    first = tokenAddressERC223
+    second = tokenAddressERC20
+  }
+  let value = fetchTokenSymbolSlim(first)
   if (value == 'unknown') {
-    return fetchTokenSymbolSlim(tokenAddressERC223)
+    return fetchTokenSymbolSlim(second)
   }
   return value
 }
 
 export function fetchTokenName(tokenAddressERC20: Address, tokenAddressERC223: Address): string {
-  let value = fetchTokenNameSlim(tokenAddressERC20)
+  let first = tokenAddressERC20
+  let second = tokenAddressERC223
+  if (isERC20Wrapper(tokenAddressERC20, tokenAddressERC223)) {
+    first = tokenAddressERC223
+    second = tokenAddressERC20
+  }
+  let value = fetchTokenNameSlim(first)
   if (value == 'unknown') {
-    return fetchTokenNameSlim(tokenAddressERC223)
+    return fetchTokenNameSlim(second)
   }
   return value
 }
